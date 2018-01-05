@@ -1,0 +1,40 @@
+
+
+#import "NSString+Extension.h"
+
+@implementation NSString (Extension)
+
++ (CGSize)sizeWithStr:(NSString *)str Withfont:(UIFont*)font WithCGSize:(CGSize )CGsize{
+    NSDictionary *attribute = @{NSFontAttributeName:font};
+    CGSize size = [str boundingRectWithSize:CGsize options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
+    return size;
+}
+
++ (NSString*)trim:(NSString*)str_
+{
+    NSCharacterSet *whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    return [str_ stringByTrimmingCharactersInSet:whitespace];
+}
+
+
++(NSString*)strChangeTime:(NSString*)times
+{
+    if (!times || [times isEqualToString:@""] || [times isEqualToString:@""]||[times isEqualToString:@"(null)"]) {
+        return @"";
+    }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //设定时间格式,这里可以设置成自己需要的格式
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:[times intValue]];
+    NSString *confromTimespStr = [dateFormatter stringFromDate:confromTimesp];
+    return confromTimespStr;
+}
+
++(NSString *)getCurrentTime{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *currentDateStr = [dateFormatter stringFromDate:[NSDate date]];
+    return currentDateStr;
+}
+
+@end

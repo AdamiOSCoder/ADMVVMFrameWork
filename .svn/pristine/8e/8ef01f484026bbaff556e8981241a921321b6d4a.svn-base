@@ -1,0 +1,35 @@
+//
+//  PrefixHeader.pch
+//  WTBM
+//
+//  Created by Adam的Apple on 2017/12/26.
+//  Copyright © 2017年 Adam的Apple. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#define WIDTH [UIScreen mainScreen].bounds.size.width
+#define HEIGHT [UIScreen mainScreen].bounds.size.height
+
+#define BASEURL [NSURL URLWithString:@"http://192.168.0.154:8088/yqxqrest/"]
+
+//获取当前版本
+#define APPVERSION [NSBundle mainBundle].infoDictionary[@"CFBundleShortVersionString"]
+
+
+//颜色设置
+#define SetColor(rgbValue)[UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+//weakSelf
+#define weakSelf __weak typeof(self)wself = self
+
+//Masonry自动布局头文件
+#define MAS_SHORTHAND
+#define MAS_SHORTHAND_GLOBALS
+
+//不同屏幕适应的宽高比例 *****(管用,重要)
+#define kFitWidth kWidth/375.0
+#define kFitHeight kHeight/667.0
+
+#endif /* PrefixHeader_pch */

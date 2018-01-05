@@ -1,0 +1,102 @@
+//
+//  ADSettingViewController.m
+//  WTBM
+//
+//  Created by Adam的Apple on 2017/12/26.
+//  Copyright © 2017年 Adam的Apple. All rights reserved.
+//
+
+#import "ADSettingViewController.h"
+#import "ADDataSource.h"
+#import "ADSettingCellModel.h"
+#import "Setting.h"
+#import "ADSettingTableViewCell.h"
+#import "ADNetWorkTools.h"
+
+@interface ADSettingViewController ()<UITableViewDelegate>
+@property(nonatomic,strong)UITableView *setTableView;
+@property(nonatomic,strong)ADDataSource *ADDataSource;
+@end
+
+static NSString * const PersonCellIdentifier = @"setting";
+
+@implementation ADSettingViewController
+{
+    
+    NSArray *_adArray;
+    NSDictionary *_adDic;
+    NSMutableArray *_tempArray;
+    
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+     [self initTitleView:@"我的"];
+     [self setBackColor];
+    [self requestServerData];
+    [self setUpTableView];
+    
+}
+
+- (void)setUpTableView{
+    
+    TableViewCellConfigureBlock configureCell = ^(ADSettingTableViewCell *cell,Setting *setting){
+        ADSettingCellModel *model = [[ADSettingCellModel alloc] initWithModel:setting];
+        [cell bindWithModel:model];
+    };
+
+
+    self.ADDataSource = [[ADDataSource alloc] initWithItems:_tempArray cellIdentifier:PersonCellIdentifier configureCellBlock:configureCell];
+
+    self.setTableView.dataSource = self.ADDataSource;
+
+    [self.setTableView registerNib:[ADSettingTableViewCell nib] forCellReuseIdentifier:PersonCellIdentifier];
+
+    [self.view addSubview:self.setTableView];
+}
+
+#pragma mark 处理从服务器返回的数据转化为模型
+- (void)requestServerData{
+    
+    //网络请求类
+//    [[ADNetWorkTools shareNetworkTools] requestData:ADRequestMethodPOST urlStr:MemLevDes_URL params:nil completion:^(id responseObject, NSError *error) {
+//        if(responseObject){
+//
+//        }else{
+//
+//        }
+//    }];
+    
+    _adArray = @[@{@"name":@"哈哈哈哈哈",@"age":@"100"},@{@"name":@"1111",@"age":@"1000"}];
+    _tempArray = [[NSMutableArray alloc] init];
+    
+    for(NSDictionary *dic in _adArray){
+        Setting *setting = [MTLJSONAdapter modelOfClass:[Setting class] fromJSONDictionary:dic error:nil];
+        [_tempArray addObject:setting];
+    }
+    //NSLog(@"---===%@",_tempArray);
+    [self.setTableView reloadData];
+}
+
+
+#pragma mark UITableViewDelegate
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 100;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+}
+
+
+- (UITableView *)setTableView{
+    if(!_setTableView){
+        _setTableView = [[UITableView alloc] init];
+        _setTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT);
+        _setTableView.tableFooterView = [UIView new];
+        _setTableView.delegate = self;
+    }
+    return _setTableView;
+}
+
+@end

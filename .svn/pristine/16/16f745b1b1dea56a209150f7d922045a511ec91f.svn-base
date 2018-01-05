@@ -1,0 +1,54 @@
+//
+//  ADBaseViewController.m
+//  WTBM
+//
+//  Created by Adam的Apple on 2017/12/26.
+//  Copyright © 2017年 Adam的Apple. All rights reserved.
+//
+
+#import "ADBaseViewController.h"
+
+@interface ADBaseViewController ()
+
+@end
+
+@implementation ADBaseViewController
+{
+    UILabel *_titleLabel;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+}
+
+//修改导航栏的标题文字
+- (void)initTitleView:(NSString *)title
+{
+    if (_titleLabel == nil) {
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 150, 30)];
+    }
+    //titleLabel.textColor = UIColorFromRGB(0x212121);
+    _titleLabel.textColor = [UIColor blackColor];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    _titleLabel.backgroundColor = [UIColor clearColor];
+    _titleLabel.font = [UIFont systemFontOfSize:18.0f];
+    _titleLabel.text = title;
+    self.navigationItem.titleView = _titleLabel;
+}
+
+#pragma mark 设置背景颜色
+- (void)setBackColor{
+    self.view.backgroundColor = [UIColor whiteColor];
+}
+
+#pragma mark 隐藏tabBar
+- (void)hiddenTabBar{
+    self.tabBarController.tabBar.hidden = YES;
+}
+
+#pragma mark 显示tabBar
+- (void)showTabBar{
+    self.tabBarController.tabBar.hidden = NO;
+}
+@end

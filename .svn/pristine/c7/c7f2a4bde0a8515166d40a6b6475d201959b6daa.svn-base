@@ -1,0 +1,24 @@
+//
+//  ADSettingViewController.m
+//  WTBM
+//
+//  Created by Adam的Apple on 2017/12/26.
+//  Copyright © 2017年 Adam的Apple. All rights reserved.
+//
+
+#import "ADSettingViewController.h"
+
+@interface ADSettingViewController ()
+
+@end
+
+@implementation ADSettingViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+     [self initTitleView:@"我的"];
+     [self setBackColor];
+}
+
+
+@end

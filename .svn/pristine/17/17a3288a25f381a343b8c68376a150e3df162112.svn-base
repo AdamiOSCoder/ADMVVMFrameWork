@@ -1,0 +1,100 @@
+//
+//  AppDelegate.m
+//  WTBM
+//
+//  Created by Adam的Apple on 2017/12/26.
+//  Copyright © 2017年 Adam的Apple. All rights reserved.
+//
+
+#import "AppDelegate.h"
+#import "ADNewFeatureCollectionController.h"
+#import "ADMainTaBarController.h"
+
+@interface AppDelegate ()
+
+@end
+
+@implementation AppDelegate
+
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    [self setRootViewController];
+    //[self setNavigationBarAppearance];
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+
+- (void)setRootViewController{
+    ADMainTaBarController *main=[[ADMainTaBarController alloc] init];
+    //获取当前App的版本号
+    NSString *currentVersion= APPVERSION;
+    //获取沙盒中保存的版本
+    NSString *version=[[NSUserDefaults standardUserDefaults] objectForKey:@"version"];
+    if([currentVersion isEqualToString:version]){
+        self.window.rootViewController=main;
+        
+        //        ADNewFeatureCollectionController *newFeature=[[ADNewFeatureCollectionController alloc] init];
+        //        self.window.rootViewController=newFeature;
+        
+    }else{
+        //保存App的版本
+        [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:@"version"];
+        ADNewFeatureCollectionController *newFeature=[[ADNewFeatureCollectionController alloc] init];
+        self.window.rootViewController=newFeature;
+    }
+}
+
+// 统一设置状态栏的外观
+- (void)setStatusBarAppearance:(UIApplication *)application
+{
+    // 设置状态栏的颜色
+    application.statusBarStyle = UIStatusBarStyleLightContent;
+}
+
+//初始化tabbar设置
+- (void)customizeInterface {
+    [[UITabBar appearance] setShadowImage:[[UIImage alloc] init]];
+    
+    //未选中字体颜色
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromRGB(0xAFAFAF)} forState:UIControlStateNormal];
+    
+    //选中字体颜色
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:UIColorFromRGB(0x1890E2)} forState:UIControlStateSelected];
+    
+    // 设置背景图片
+    UITabBar *tabBarAppearance = [UITabBar appearance];
+    [tabBarAppearance setBackgroundColor:UIColorFromRGB(0xF0F0F0)];
+    
+}
+
+
+- (void)applicationWillResignActive:(UIApplication *)application {
+    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+}
+
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+}
+
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+}
+
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+}
+
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+@end
